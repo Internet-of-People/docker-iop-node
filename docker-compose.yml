@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+    iop-blockchain:
+        build:
+            context: ./iop-blockchain
+        ports:
+            - "8332"
+            - "8333"
+            - "18332"
+            - "18333"
+            - "4877"
+        tty: true

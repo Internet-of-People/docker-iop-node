@@ -5,9 +5,13 @@ services:
         build:
             context: ./iop-blockchain
         ports:
-            - "8332"
-            - "8333"
-            - "18332"
-            - "18333"
-            - "4877"
+            - 8333/tcp  # IoP service
+            - 8337/tcp  # RPC
+            - 18337/tcp # RPC testnet
+        volumes:
+            #- iop-blockchain-data:/root/.IoP/
+            - ./iop-blockchain/data/:/root/.IoP/
+        stdin_open: true
         tty: true
+#volumes:
+#    iop-blockchain-data: {}

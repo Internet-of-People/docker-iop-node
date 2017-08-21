@@ -1,17 +1,14 @@
-version: "2"
+version: "3"
 
 services:
     iop-blockchain:
         build:
-            context: ./iop-blockchain
+            context: ./iop-blockchain/build/
         ports:
             - 8333/tcp  # IoP service
             - 8337/tcp  # RPC
             - 18337/tcp # RPC testnet
         volumes:
-            #- iop-blockchain-data:/root/.IoP/
+            # share blockchain data, wallet and conf with the host
             - ./iop-blockchain/data/:/root/.IoP/
-        stdin_open: true
         tty: true
-#volumes:
-#    iop-blockchain-data: {}

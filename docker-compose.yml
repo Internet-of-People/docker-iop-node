@@ -11,4 +11,6 @@ services:
         volumes:
             # share blockchain data, wallet and conf with the host
             - ./iop-blockchain/data/:/root/.IoP/
+        environment:
+            CPU_THREADS: 1
         tty: true

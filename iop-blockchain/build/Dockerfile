@@ -40,9 +40,9 @@ ENTRYPOINT \
   fi && \
   i=1 && \
   while [ $i -le $CPU_THREADS ]; do \
-    mkdir /root/.IoP/thread-$i && \
-    cp /root/.IoP/thread-1/IoP.conf /root/.IoP/thread-$i/. && \
-    cp /root/.IoP/thread-1/wallet.dat /root/.IoP/thread-$i/. && \
+    mkdir -p /root/.IoP/thread-$i && \
+    cp /root/.IoP/thread-1/IoP.conf /root/.IoP/thread-$i/. 2>/dev/null || : && \
+    cp /root/.IoP/thread-1/wallet.dat /root/.IoP/thread-$i/. 2>/dev/null || : && \
     # run iop daemon
     nohup IoPd -datadir=/root/.IoP/thread-$i & \
     i=$(($i + 1)); \

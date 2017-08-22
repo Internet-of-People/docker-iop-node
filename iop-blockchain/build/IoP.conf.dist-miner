@@ -16,3 +16,12 @@ minewhitelistaddr=<YOUR_PUBLIC_IOP_ADDRESS>
 
 # Send mined coins to this specified address instead of the default whitelisted address. [ default:unset ]
 mineto=<YOUR_PUBLIC_IOP_ADDRESS>
+
+### WARNING
+### The following parameters are dynamically changes by the Docker container at each run, depending on the number of chosen threads
+
+# Listen for connections on this TCP port [ default:8333 | testnet: 18333 ]
+port=8341
+
+# Listen for RPC connections on this TCP port [ default:8332 | testnet:18332 ]
+rpcport=8351

@@ -23,11 +23,11 @@ ENTRYPOINT \
     echo "No existing data. Creating a new mining configuration..." && \
     # run iop daemon to create a new wallet
     mkdir -p /root/.IoP/thread-1/ && \
-    nohup IoPd -datadir=/root/.IoP/thread-1/ & sleep 5 && \
+    nohup IoPd -datadir=/root/.IoP/thread-1/ 2>/dev/null & IOPD_ID=$! && sleep 5 && \
     # fetch the wallet public key
     IOP_ADDR=$(IoP-cli -datadir=/root/.IoP/thread-1 getaccountaddress "") && \
     # stop iop daemon
-    IoP-cli -datadir=/root/.IoP/thread-1 stop && \
+    kill -9 $IOPD_ID && \
     # setup conf file
     IOP_CONF_PATH=/root/.IoP/thread-1/IoP.conf && \
     cp /root/IoP-miner.conf.dist-miner $IOP_CONF_PATH && \
@@ -38,13 +38,19 @@ ENTRYPOINT \
     sed -i "s/\(rpcuser *= *\).*/\1$(head /dev/urandom | tr -dc A-Za-z_ | head -c 10 ; echo '')/" $IOP_CONF_PATH && \
     sed -i "s/\(rpcpassword *= *\).*/\1$(head /dev/urandom | tr -dc A-Za-z0-9_ | head -c 64 ; echo '')/" $IOP_CONF_PATH ; \
   fi && \
+  # Run the iop server - up to 8 CPU threads
+  if [ $CPU_THREADS -gt 8 ]; then echo "Max threads limit reached" && CPU_THREADS=8; fi && \
   i=1 && \
   while [ $i -le $CPU_THREADS ]; do \
+    IOP_CONF_PATH=/root/.IoP/thread-$i/IoP.conf && \
     mkdir -p /root/.IoP/thread-$i && \
     cp /root/.IoP/thread-1/IoP.conf /root/.IoP/thread-$i/. 2>/dev/null || : && \
     cp /root/.IoP/thread-1/wallet.dat /root/.IoP/thread-$i/. 2>/dev/null || : && \
-    # run iop daemon
-    nohup IoPd -datadir=/root/.IoP/thread-$i & \
+    sed -i "s/\(port *= *\).*/\1833$i/" $IOP_CONF_PATH && \
+    sed -i "s/\(rpcport *= *\).*/\1834$i/" $IOP_CONF_PATH && \
+    # run iop daemon for the current thread
+    echo "Starting thread $i" && \
+    nohup IoPd -datadir=/root/.IoP/thread-$i >thread-$i.out 2>&1 & \
     i=$(($i + 1)); \
   done && \
   bash

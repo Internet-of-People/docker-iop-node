@@ -56,7 +56,7 @@ ENTRYPOINT \
     sed -i "s/\(rpcport *= *\).*/\1$RPC_PORT/" $IOP_THREAD_PATH/IoP.conf && \
     # run iop daemon for the current thread
     echo "Starting thread $i" && \
-    nohup IoPd -datadir=$IOP_THREAD_PATH >thread-$i.out 2>&1 & \
+    nohup IoPd -datadir=$IOP_THREAD_PATH >$IOP_THREAD_PATH/thread-$i.out 2>&1 & \
     echo "Thread $i started!" && \
     i=$(($i + 1)); \
   done && \

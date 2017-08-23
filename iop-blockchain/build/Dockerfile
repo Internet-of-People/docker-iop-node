@@ -14,20 +14,20 @@ RUN \
   apt-get install -y iop-blockchain
 
 ENTRYPOINT \
-  # update packages list
+# update packages list
   apt-get update && \
-  # upgrade iop-blockchain to the latest version 
+# upgrade iop-blockchain to the latest version 
   apt-get install -y --only-upgrade iop-blockchain && \
-  # init conf if data path is empty
+# init conf if data path is empty
   if [ -z "$(ls -A /root/.IoP/)" ]; then \
     echo "No existing data. Creating a new mining configuration..." && \
     # run iop daemon to create a new wallet
     mkdir -p /root/.IoP/thread-1/ && \
-    nohup IoPd -datadir=/root/.IoP/thread-1/ 2>/dev/null & IOPD_ID=$! && sleep 5 && \
+    nohup IoPd -datadir=/root/.IoP/thread-1/ 2>/dev/null & sleep 5 && \
     # fetch the wallet public key
     IOP_ADDR=$(IoP-cli -datadir=/root/.IoP/thread-1 getaccountaddress "") && \
     # stop iop daemon
-    kill -9 $IOPD_ID && \
+    pkill IoPd && \
     # setup conf file
     IOP_CONF_PATH=/root/.IoP/thread-1/IoP.conf && \
     cp /root/IoP-miner.conf.dist-miner $IOP_CONF_PATH && \
@@ -36,21 +36,28 @@ ENTRYPOINT \
     sed -i "s/\(mineto *= *\).*/\1$IOP_ADDR/" $IOP_CONF_PATH && \
     # set random RPC credentials
     sed -i "s/\(rpcuser *= *\).*/\1$(head /dev/urandom | tr -dc A-Za-z_ | head -c 10 ; echo '')/" $IOP_CONF_PATH && \
-    sed -i "s/\(rpcpassword *= *\).*/\1$(head /dev/urandom | tr -dc A-Za-z0-9_ | head -c 64 ; echo '')/" $IOP_CONF_PATH ; \
+    sed -i "s/\(rpcpassword *= *\).*/\1$(head /dev/urandom | tr -dc A-Za-z0-9_ | head -c 64 ; echo '')/" $IOP_CONF_PATH && \
+    echo "New configuration created!" ; \
   fi && \
-  # Run the iop server - up to 8 CPU threads
+# run the iop server - up to 8 CPU threads
   if [ $CPU_THREADS -gt 8 ]; then echo "Max threads limit reached" && CPU_THREADS=8; fi && \
   i=1 && \
   while [ $i -le $CPU_THREADS ]; do \
-    IOP_CONF_PATH=/root/.IoP/thread-$i/IoP.conf && \
+    echo "Setting up thread $i..." && \
+    IOP_THREAD_PATH=/root/.IoP/thread-$i && \
+    IOP_PORT=833$i && \
+    RPC_PORT=834$i && \
     mkdir -p /root/.IoP/thread-$i && \
-    cp /root/.IoP/thread-1/IoP.conf /root/.IoP/thread-$i/. 2>/dev/null || : && \
-    cp /root/.IoP/thread-1/wallet.dat /root/.IoP/thread-$i/. 2>/dev/null || : && \
-    sed -i "s/\(port *= *\).*/\1833$i/" $IOP_CONF_PATH && \
-    sed -i "s/\(rpcport *= *\).*/\1834$i/" $IOP_CONF_PATH && \
+    # copy conf and wallet to the new thread conf
+    cp /root/.IoP/thread-1/IoP.conf $IOP_THREAD_PATH/. 2>/dev/null || : && \
+    cp /root/.IoP/thread-1/wallet.dat $IOP_THREAD_PATH/. 2>/dev/null || : && \
+    # set differents ports by thread
+    sed -i "s/\(port *= *\).*/\1$IOP_PORT/" $IOP_THREAD_PATH/IoP.conf && \
+    sed -i "s/\(rpcport *= *\).*/\1$RPC_PORT/" $IOP_THREAD_PATH/IoP.conf && \
     # run iop daemon for the current thread
     echo "Starting thread $i" && \
-    nohup IoPd -datadir=/root/.IoP/thread-$i >thread-$i.out 2>&1 & \
+    nohup IoPd -datadir=$IOP_THREAD_PATH >thread-$i.out 2>&1 & \
+    echo "Thread $i started!" && \
     i=$(($i + 1)); \
   done && \
   bash

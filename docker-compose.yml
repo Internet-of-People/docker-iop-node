@@ -7,8 +7,6 @@ services:
         ports:
             - 8331-8338    # IoP
             - 8341-8348    # RPC
-            - 18331-18338  # IoP testnet
-            - 18341-18348  # RPC testnet
         volumes:
             # share blockchain data, wallet and conf with the host
             - ./iop-blockchain/data/:/root/.IoP/

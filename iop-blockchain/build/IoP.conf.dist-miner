@@ -18,10 +18,11 @@ minewhitelistaddr=<YOUR_PUBLIC_IOP_ADDRESS>
 mineto=<YOUR_PUBLIC_IOP_ADDRESS>
 
 ### WARNING
-### The following parameters are dynamically changes by the Docker container at each run, depending on the number of chosen threads
+### Do not manually update the following parameters 
+### They are dynamically set by the Docker container at each run, depending on the number of chosen CPU threads
 
-# Listen for connections on this TCP port [ default:8333 | testnet: 18333 ]
+# Listen for connections on this TCP port
 port=8341
 
-# Listen for RPC connections on this TCP port [ default:8332 | testnet:18332 ]
+# Listen for RPC connections on this TCP port
 rpcport=8351

@@ -1,12 +1,14 @@
-# docker-iop-node
+## docker-iop-node
 
-### Requirements
+Run a IoP mining node within a Docker container.
+
+#### Requirements
 - A IoP mining licence
 - A Linux host
 - A [Docker](https://docs.docker.com/engine/installation/) install
 - A [Docker Compose](https://docs.docker.com/compose/install/#install-compose) install (compatible with file version 3)
 
-### Quick setup
+#### Quick setup
 
 1. Clone or download the current repository
 2. Launch a terminal on the project's folder, and build the Docker container: 
@@ -22,6 +24,21 @@ To stop the process, execute from the terminal on the project's folder: `docker-
 
 All the blockchain data, conf and wallet are is the [data](iop-blockchain/data/). It is strongly advised to not touch these files unless you know what you do. Also, don't forget to backup your `wallet.dat` file.
 
-If you want to access your Docker container, `docker-compose exec iop-blockchain bash` will open a bash shell inside your container. You will be then able to use any `IoP-cli` command by specifying the data directory as it: `IoP-cli -datadir="/root/.IoP/thread-1" <your_command>`.  
+If you want to access your node shell `docker-compose exec iop-blockchain bash` will open a bash shell inside your container. You will be then able to use any `IoP-cli` command by specifying the data directory as it: `IoP-cli -datadir="/root/.IoP/thread-1" <your_command>`.  
 Type `exit` to quit the container.
 
+#### Run multiple threads
+
+By default, only 1 thread is launched, using 1 CPU code. 
+If you want to run multiple thread: 
+- stop your current process first: `docker-compose down`
+- in [docker-compose.yml](docker-compose.yml) set the number of wanted threads (8 max) next to `CPU_THREADS`
+- restart the node: `docker-compose up -d`
+
+### Use an existing wallet
+
+Once the node has been setup and launched a first time:
+- stop it `docker-compose down`
+- replace the `iop-blockchain/data/thread-1/wallet.dat` file by your IoP wallet.dat
+- open the `iop-blockchain/data/thread-1/IoP.conf` file, then replace the values of `minewhitelistaddr` and `mineto` by your wallet address
+- restart the node `docker-compose up -d`. All existing conf and wallets in the others threads folders will be automatically updated.

@@ -35,7 +35,7 @@ If you want to run multiple thread:
 - in [docker-compose.yml](docker-compose.yml) set the number of wanted threads (8 max) next to `CPU_THREADS`
 - restart the node: `docker-compose up -d`
 
-### Use an existing wallet
+#### Use an existing wallet
 
 Once the node has been setup and launched a first time:
 - stop it `docker-compose down`

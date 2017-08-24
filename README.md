@@ -1,6 +1,7 @@
 # docker-iop-node
 
 ### Requirements
+- A IoP mining licence
 - A Linux host
 - A [Docker](https://docs.docker.com/engine/installation/) install
 - A [Docker Compose](https://docs.docker.com/compose/install/#install-compose) install (compatible with file version 3)
@@ -13,7 +14,7 @@
 docker-compose build
 docker-compose up -d
 ```
-3. Open the IoP.conf file in `iop-blockchain/data/thread-1/`, copy the address next to `minewhitelistaddr=` (this is you wallet public address) and give it to an IoP admin in order to be added in the miner list.
+3. Open the IoP.conf file in `iop-blockchain/data/thread-1/`, copy the address next to `minewhitelistaddr=` (this is your wallet public address) and give it to an IoP admin in order to be added in the miner list.
 
 __*Congratulation! You're mining!*__
 

@@ -22,7 +22,7 @@ __*Congratulation! You're mining!*__
 
 To stop the process, execute from the terminal on the project's folder: `docker-compose down`.
 
-All the blockchain data, conf and wallet are is the [data](iop-blockchain/data/). It is strongly advised to not touch these files unless you know what you do. Also, don't forget to backup your `wallet.dat` file.
+All the blockchain data, conf and wallet are in the [data](iop-blockchain/data/) folder. It is strongly advised to not touch these files unless you know what you do. Also, don't forget to backup your `wallet.dat` file.
 
 If you want to access your node shell `docker-compose exec iop-blockchain bash` will open a bash shell inside your container. You will be then able to use any `IoP-cli` command by specifying the data directory as it: `IoP-cli -datadir="/root/.IoP/thread-1" <your_command>`.  
 Type `exit` to quit the container.

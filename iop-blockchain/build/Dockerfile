@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 MAINTAINER Lucas Pantanella
 
-COPY IoP.conf.dist-miner /root/IoP-miner.conf.dist-miner
+COPY IoP.conf.dist-miner /root/IoP.conf.dist-miner
 
 RUN \
   # add iop repository
@@ -23,14 +23,14 @@ ENTRYPOINT \
     echo "No existing data. Creating a new mining configuration..." && \
     # run iop daemon to create a new wallet
     mkdir -p /root/.IoP/thread-1/ && \
-    nohup IoPd -datadir=/root/.IoP/thread-1/ 2>/dev/null & sleep 5 && \
+    nohup IoPd -datadir=/root/.IoP/thread-1 2>/dev/null & sleep 5 && \
     # fetch the wallet public key
     IOP_ADDR=$(IoP-cli -datadir=/root/.IoP/thread-1 getaccountaddress "") && \
     # stop iop daemon
     pkill IoPd && \
     # setup conf file
     IOP_CONF_PATH=/root/.IoP/thread-1/IoP.conf && \
-    cp /root/IoP-miner.conf.dist-miner $IOP_CONF_PATH && \
+    cp /root/IoP.conf.dist-miner $IOP_CONF_PATH && \
     # add wallet address to conf
     sed -i "s/\(minewhitelistaddr *= *\).*/\1$IOP_ADDR/" $IOP_CONF_PATH && \
     sed -i "s/\(mineto *= *\).*/\1$IOP_ADDR/" $IOP_CONF_PATH && \

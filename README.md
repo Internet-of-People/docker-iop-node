@@ -49,7 +49,7 @@ Before all, you must access your Docker container: `docker-compose exec iop-bloc
 
 Then, you will be able to execute some useful commands. These examples are given for the thread 1 but can be applied for any thread you have launched.
 
-- Get 100 last logs for thread 1: `tail -100 IoP-cli -datadir="/root/.IoP/thread-1/output.log`
+- Get 100 last logs for thread 1: `tail -100 /root/.IoP/thread-1/output.log`
 - Get wallet info: `IoP-cli -datadir=/root/.IoP/thread-1 getwalletinfo`
 - Get mining info: `IoP-cli -datadir=/root/.IoP/thread-1 getmininginfo`
 - List all transactions: `IoP-cli -datadir=/root/.IoP/thread-1 listtransactions`

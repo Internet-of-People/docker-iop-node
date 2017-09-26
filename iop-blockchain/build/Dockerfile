@@ -23,7 +23,7 @@ ENTRYPOINT \
     echo "No existing data. Creating a new mining configuration..." && \
     # run iop daemon to create a new wallet
     mkdir -p /root/.IoP/thread-1/ && \
-    nohup IoPd -datadir=/root/.IoP/thread-1 2>/dev/null & sleep 5 && \
+    nohup IoPd -datadir=/root/.IoP/thread-1 2>/dev/null & sleep 10 && \
     # fetch the wallet public key
     IOP_ADDR=$(IoP-cli -datadir=/root/.IoP/thread-1 getaccountaddress "") && \
     # stop iop daemon

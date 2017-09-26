@@ -42,3 +42,17 @@ Once the node has been setup and launched a first time:
 - replace the `iop-blockchain/data/thread-1/wallet.dat` file by your IoP wallet.dat
 - open the `iop-blockchain/data/thread-1/IoP.conf` file, then replace the values of `minewhitelistaddr` and `mineto` by your wallet address
 - restart the node `docker-compose up -d`. All existing conf and wallets in the others threads folders will be automatically updated.
+
+#### Useful commands for non-initiated persons
+
+Before all, you must access your Docker container: `docker-compose exec iop-blockchain bash`.
+
+Then, you will be able to execute some useful commands. These examples are given for the thread 1 but can be applied for any thread you have launched.
+
+- Get 100 last logs for thread 1: `tail -100 IoP-cli -datadir="/root/.IoP/thread-1/output.log`
+- Get wallet info: `IoP-cli -datadir=/root/.IoP/thread-1 getwalletinfo`
+- Get mining info: `IoP-cli -datadir=/root/.IoP/thread-1 getmininginfo`
+- List all transactions: `IoP-cli -datadir=/root/.IoP/thread-1 listtransactions`
+
+Most of the commands from the [Bitcoin API call list](https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list) will work.
+

@@ -10,8 +10,10 @@ Run a IoP mining node within a Docker container.
 
 #### Quick setup
 
+> _Disclaimer: Make sure to properly protect your wallet and other sensitive data. None of the authors, contributors, administrators, or anyone else connected with this repository, in any way whatsoever, can be responsible for your use of this project._
+
 1. Clone or download the current repository
-2. Launch a terminal on the project's folder, and build the Docker container: 
+2. Launch a terminal on the project's folder, build the Docker image and run the container: 
 ```
 docker-compose build
 docker-compose up -d

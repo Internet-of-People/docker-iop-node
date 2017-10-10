@@ -22,7 +22,7 @@ Run a IoP HD wallet mining node within a Docker container.
 docker build -t naei/docker-iop-hd-node .
 # run attached
 docker run -it -p 55001 -p 56001 -v /root/docker-iop-hd-node/data:/root/iop --name iop_hd_node naei/docker-iop-hd-node
-# if you wallet is encrypted, unlock wallet to start mining
+# if your wallet is encrypted, unlock wallet to start mining
 iop-cli --datadir=/root/iop/ walletpassphrase <YOUR_WALLET_PASSPHRASE> 300
 ```
 

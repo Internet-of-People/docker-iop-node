@@ -11,11 +11,8 @@ RUN \
 
 VOLUME /root/iop
 
+ADD data/* /root/iop/
+
 ENTRYPOINT \
     nohup iopd --datadir=/root/iop/ 2>/dev/null & \
     bash
-
-# docker build -t naei/docker-iop-hd-node .
-# docker run -it -p 55001 -p 56001 -v /root/docker-iop-hd-node/data:/root/iop --name iop_hd_node naei/docker-iop-hd-node bash
-# ctrl p + ctrl q
-# docker exec -it iop_hd_node bash

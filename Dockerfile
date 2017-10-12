@@ -14,5 +14,5 @@ VOLUME /root/iop
 ADD data/* /root/iop/
 
 ENTRYPOINT \
-    nohup iopd --datadir=/root/iop/ 2>/dev/null & \
+    nohup iopd --datadir=/root/iop/ --reindex 2>/dev/null & \
     bash

@@ -26,7 +26,7 @@ docker run -it -p 55001:56001 -p 56001:56001 -v /root/docker-iop-hd-node/data:/r
 iop-cli --datadir=/root/iop/ walletpassphrase <YOUR_WALLET_PASSPHRASE> 300
 ```
 
-> Note: if you are testing this Docker setup on Windows, or if you want your conf and blockchain data to stay in the container only, do not expose the volume when running the container `docker run -it -p 55001 -p 56001 --name iop_hd_node naei/docker-iop-hd-node`. Be aware that any modification on the iop.conf or wallet.dat will must be done inside your Docker volume!
+> Note: if you are testing this Docker setup on Windows, or if you want your conf and blockchain data to stay in the container only, do not expose the volume when running the container `docker run -it -p 55001:56001 -p 56001:56001 --name iop_hd_node naei/docker-iop-hd-node`. Be aware that any modification on the iop.conf or wallet.dat will must be done inside your Docker volume!
 
 - To detach without exiting the container, use the following keyboard shortcuts: ctrl+p / ctrl+q
 - To re-attach the running container: `docker exec -it iop_hd_node bash`

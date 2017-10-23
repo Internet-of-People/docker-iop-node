@@ -1,6 +1,6 @@
 ## docker-iop-node
 
-Run a IoP HD wallet mining node within a Docker container.
+Run a IoP wallet mining node within a Docker container.
 
 #### Requirements
 - A IoP mining licence

@@ -26,13 +26,17 @@ cd ~/docker-iop-node
 # build
 docker build -t naei/docker-iop-node .
 # run attached
-docker run -it -p 55001:56001 -p 56001:56001 -v ~/docker-iop-node/data:/root/.iop --name iop_core_node naei/docker-iop-node
+docker run -it -p 55001:56001 -p 56001:56001 -v ~/docker-iop-node/data:/root/.iop --name iop_node naei/docker-iop-node
 # if your wallet is encrypted, unlock wallet to start mining
 iop-cli walletpassphrase <YOUR_WALLET_PASSPHRASE> 300
 ```
 
-> Note: if you are testing this Docker setup on Windows, or if you want your conf and blockchain data to stay in the container only, do not expose the volume when running the container `docker run -it -p 55001:56001 -p 56001:56001 --name iop_core_node naei/docker-iop-core-node`. Be aware that any modification on the iop.conf or wallet.dat will must be done inside your Docker volume!
+> Note: if you are testing this Docker setup on Windows, or if you want your conf and blockchain data to stay in the container only, do not expose the volume when running the container:  
+`
+docker run -it -p 55001:56001 -p 56001:56001 --name iop_node naei/docker-iop-node
+`  
+Be aware that any further modification on the iop.conf or wallet.dat must be done inside your Docker volume!
 
 - To detach without exiting the container, use the following keyboard shortcuts: ctrl+p / ctrl+q
-- To re-attach the running container: `docker exec -it iop_core_node bash`
-- To restart the stopped container: `docker restart iop_core_node && docker exec -ti iop_core_node bash`
+- To re-attach the running container: `docker exec -it iop_node bash`
+- To restart the stopped container: `docker restart iop_node && docker exec -ti iop_node bash`

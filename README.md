@@ -28,7 +28,7 @@ docker build -t naei/docker-iop-node .
 # run attached
 docker run -it -p 55001:56001 -p 56001:56001 -v ~/docker-iop-node/data:/root/.iop --name iop_node naei/docker-iop-node
 # if your wallet is encrypted, unlock wallet to start mining
-iop-cli walletpassphrase <YOUR_WALLET_PASSPHRASE> 300
+iop-cli walletpassphrase <YOUR_WALLET_PASSPHRASE> 30
 ```
 
 > Note: if you are testing this Docker setup on Windows, or if you want your conf and blockchain data to stay in the container only, do not expose the volume when running the container:  

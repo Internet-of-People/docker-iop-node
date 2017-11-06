@@ -5,7 +5,7 @@ MAINTAINER Lucas Pantanella
 RUN \
     apt update && apt upgrade -y && \
     apt install -y wget nano && \
-    wget -O ./iop-hd.deb https://github.com/Internet-of-People/iop-core/releases/download/v6.0.0.93/iop-core_6.0.0-ubuntu1604_amd64.deb && \
+    wget -O ./iop-hd.deb https://github.com/Internet-of-People/iop-core/releases/download/v6.0.1/iop-core_6.0.1-ubuntu1604_amd64.deb && \
     dpkg -i ./iop-hd.deb ; \
     apt -fy install
 
